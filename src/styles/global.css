@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-deep: #050816;
+  --bg-card: #0b1230;
+  --cyan-glow: #4debff;
+  --violet-glow: #9b6dff;
+  --amber-telemetry: #ffca80;
+  --text-main: #eaf3ff;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background: radial-gradient(circle at 50% 0%, #0d1945 0%, #050816 70%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050816;
+}
+::-webkit-scrollbar-thumb {
+  background: #1b2961;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4debff;
+}
+
+/* Glassmorphism panel */
+.glass-panel {
+  background: rgba(11, 18, 48, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(77, 235, 255, 0.15);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  border-color: rgba(77, 235, 255, 0.4);
+  box-shadow: 0 0 25px rgba(77, 235, 255, 0.15), inset 0 0 15px rgba(77, 235, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+/* HUD elements */
+.hud-corner {
+  position: relative;
+}
+.hud-corner::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #4debff;
+  border-left: 2px solid #4debff;
+}
+.hud-corner::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #4debff;
+  border-right: 2px solid #4debff;
+}
+
+/* Glowing text */
+.glow-text-cyan {
+  text-shadow: 0 0 12px rgba(77, 235, 255, 0.6);
+}
+
+.glow-text-violet {
+  text-shadow: 0 0 12px rgba(155, 109, 255, 0.6);
+}
+
+/* Grid background texture */
+.cosmic-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(77, 235, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(77, 235, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Shiki code block enhancements */
+pre.shiki {
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(77, 235, 255, 0.2);
+  background-color: #070c22 !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

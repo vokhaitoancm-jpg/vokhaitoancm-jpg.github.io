@@ -1,0 +1,113 @@
+---
+import { siteConfig } from '../../data/site';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-cosmic-cyan/15 bg-space-950/80 backdrop-blur-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Brand / Logo -->
+    <a href="/" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-cosmic-cyan rounded-md p-1">
+      <div class="relative w-8 h-8 rounded-full border border-cosmic-cyan flex items-center justify-center bg-space-800/80 group-hover:border-cosmic-cyan transition-colors">
+        <span class="w-2.5 h-2.5 rounded-full bg-cosmic-cyan animate-pulse"></span>
+        <div class="absolute inset-0 rounded-full border border-cosmic-cyan/30 animate-ping"></div>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-heading font-bold text-sm sm:text-base tracking-wider text-cosmic-text group-hover:text-cosmic-cyan transition-colors">
+          COSMIC SIGNAL
+        </span>
+        <span class="text-[10px] font-mono text-cosmic-muted tracking-widest uppercase">
+          {siteConfig.callsign}
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+      {siteConfig.navLinks.map((link) => {
+        const isActive = link.href === '/' ? currentPath === '/' : currentPath.startsWith(link.href);
+        return (
+          <a
+            href={link.href}
+            class={`px-3 py-1.5 rounded text-sm font-medium transition-all relative font-mono ${
+              isActive
+                ? 'text-cosmic-cyan bg-cosmic-cyan/10 border border-cosmic-cyan/30'
+                : 'text-cosmic-muted hover:text-cosmic-text hover:bg-space-800/50'
+            }`}
+          >
+            {isActive && (
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-cosmic-cyan mr-1.5 animate-pulse"></span>
+            )}
+            {link.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Signal Status Pill & Mobile Menu Button -->
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono border border-cosmic-cyan/20 bg-space-900/60">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-cosmic-muted text-[11px]">UPLINK ACTIVE</span>
+      </div>
+
+      <!-- Mobile toggle button -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="md:hidden p-2 rounded-lg border border-cosmic-cyan/20 text-cosmic-muted hover:text-cosmic-cyan hover:bg-space-800 focus:outline-none focus:ring-2 focus:ring-cosmic-cyan"
+        aria-label="Toggle Navigation Menu"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon-bars" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-b border-cosmic-cyan/20 bg-space-950/95 px-4 pt-2 pb-4 space-y-1">
+    {siteConfig.navLinks.map((link) => {
+      const isActive = link.href === '/' ? currentPath === '/' : currentPath.startsWith(link.href);
+      return (
+        <a
+          href={link.href}
+          class={`block px-3 py-2 rounded text-base font-mono ${
+            isActive
+              ? 'text-cosmic-cyan bg-cosmic-cyan/15 font-semibold'
+              : 'text-cosmic-muted hover:text-cosmic-text hover:bg-space-800'
+          }`}
+        >
+          {link.label}
+        </a>
+      );
+    })}
+    <div class="pt-2 border-t border-cosmic-cyan/10 text-xs font-mono text-cosmic-muted flex items-center justify-between">
+      <span>FREQ: {siteConfig.frequency}</span>
+      <span class="text-emerald-400">ONLINE</span>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconBars = document.getElementById('menu-icon-bars');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  if (toggleBtn && menu && iconBars && iconClose) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      menu.classList.toggle('hidden');
+      iconBars.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+  }
+</script>

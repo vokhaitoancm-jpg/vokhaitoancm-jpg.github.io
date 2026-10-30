@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HudCard from '../components/ui/HudCard.astro';
+import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
+import { siteConfig } from '../data/site';
+---
+
+<BaseLayout
+  title="Thiết Lập Kết Nối // Kênh Truyền Tín Hiệu Trực Tiếp"
+  description="Liên hệ với Võ Khải Toàn qua đường truyền email, GitHub hoặc trạm điều khiển."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12">
+    <!-- Header -->
+    <div class="border-b border-cosmic-cyan/15 pb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-cyan/30 bg-cosmic-cyan/10 text-xs font-mono text-cosmic-cyan mb-3">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>UPLINK CHANNEL // OPEN FOR TRANSMISSIONS</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-heading font-bold text-cosmic-text">
+        Thiết Lập Kết Nối
+      </h1>
+      <p class="text-sm sm:text-base text-cosmic-muted font-sans mt-2 max-w-2xl">
+        Kênh giao tiếp mở cho các cơ hội hợp tác, trao đổi kỹ thuật hoặc thảo luận về các dự án công nghệ.
+      </p>
+    </div>
+
+    <!-- Contact Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Direct Email Card -->
+      <HudCard glow={true} class="space-y-4">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-cosmic-cyan font-bold">KÊNH CHÍNH // DIRECT TRANSMISSION</span>
+          <Badge variant="emerald">UPLINK OPEN</Badge>
+        </div>
+
+        <h2 class="text-xl font-heading font-bold text-cosmic-text">
+          Hộp Thư Điện Tử
+        </h2>
+
+        <p class="text-sm text-cosmic-muted font-sans leading-relaxed">
+          Gửi email trực tiếp đến địa chỉ trạm thu tín hiệu. Phản hồi thường được truyền phát trong vòng 24 giờ.
+        </p>
+
+        <div class="p-3 bg-space-950 rounded-lg border border-cosmic-cyan/20 flex items-center justify-between font-mono text-xs text-cosmic-cyan">
+          <span class="select-all" id="email-address">{siteConfig.socials.email}</span>
+          <button
+            id="copy-email-btn"
+            type="button"
+            class="px-2.5 py-1 rounded bg-space-850 hover:bg-cosmic-cyan hover:text-space-950 border border-cosmic-cyan/30 transition-all cursor-pointer text-[11px]"
+          >
+            <span id="copy-email-text">COPY</span>
+          </button>
+        </div>
+
+        <div class="pt-2">
+          <Button
+            href={`mailto:${siteConfig.socials.email}?subject=[COSMIC-SIGNAL]%20Ket%20noi%20tu%20Website`}
+            variant="primary"
+            size="md"
+            class="w-full"
+          >
+            <span>MỞ ỨNG DỤNG MAIL</span>
+            <span>✉</span>
+          </Button>
+        </div>
+      </HudCard>
+
+      <!-- GitHub & Source Repositories -->
+      <HudCard glow={true} class="space-y-4">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-cosmic-cyan font-bold">MÃ NGUỒN // REPOSITORIES</span>
+          <Badge variant="cyan">GITHUB</Badge>
+        </div>
+
+        <h2 class="text-xl font-heading font-bold text-cosmic-text">
+          GitHub Không Gian Số
+        </h2>
+
+        <p class="text-sm text-cosmic-muted font-sans leading-relaxed">
+          Theo dõi các commit, đồ án kỹ thuật và kho lưu trữ mã nguồn mở của dự án Cosmic Signal.
+        </p>
+
+        <div class="p-3 bg-space-950 rounded-lg border border-cosmic-cyan/20 font-mono text-xs text-cosmic-muted">
+          <div class="text-slate-300">USER: vokhaitoancm-jpg</div>
+          <div class="text-[11px] text-cosmic-cyan">STATUS: REPOS PUBLIC & SYNCED</div>
+        </div>
+
+        <div class="pt-2">
+          <Button
+            href={siteConfig.socials.github}
+            variant="secondary"
+            size="md"
+            class="w-full"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>TRUY CẬP PROFILE GITHUB</span>
+            <span>↗</span>
+          </Button>
+        </div>
+      </HudCard>
+    </div>
+
+    <!-- Signal Uplink Ping Simulator -->
+    <section class="glass-panel p-6 sm:p-8 rounded-2xl border border-cosmic-cyan/25 space-y-4 font-mono text-xs">
+      <div class="flex items-center justify-between border-b border-cosmic-cyan/15 pb-3">
+        <span class="text-cosmic-cyan font-bold">TERMINAL // TRÌNH KIỂM TRA ĐƯỜNG TRUYỀN (PING TEST)</span>
+        <span class="text-emerald-400">STATUS: READY</span>
+      </div>
+
+      <p class="text-cosmic-muted font-sans text-sm">
+        Thực hiện gửi một gói tin ICMP Ping giả lập đến trạm mặt đất để kiểm tra độ trễ và chất lượng liên kết không gian.
+      </p>
+
+      <div class="bg-space-950 p-4 rounded-xl border border-cosmic-cyan/15 space-y-2 min-h-[140px]" id="ping-console">
+        <div class="text-cosmic-muted/60">// Trình kiểm tra ping sẵn sàng. Nhấn nút bên dưới để phát tín hiệu.</div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button
+          id="send-ping-btn"
+          type="button"
+          class="px-4 py-2 rounded bg-cosmic-cyan/20 border border-cosmic-cyan text-cosmic-cyan hover:bg-cosmic-cyan hover:text-space-950 transition-all font-bold cursor-pointer"
+        >
+          📶 PHÁT GÓI TIN PING
+        </button>
+
+        <span class="text-[11px] text-cosmic-muted">
+          KÊNH: 1420.405 MHz (Hydrogen Line)
+        </span>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  // Copy Email Button
+  const copyBtn = document.getElementById('copy-email-btn');
+  const copyText = document.getElementById('copy-email-text');
+  const emailAddr = document.getElementById('email-address')?.innerText || 'vokhaitoancm@gmail.com';
+
+  if (copyBtn && copyText) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(emailAddr);
+        copyText.textContent = 'ĐÃ SAO CHÉP!';
+        setTimeout(() => {
+          copyText.textContent = 'COPY';
+        }, 2000);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
+
+  // Ping Test Simulator
+  const pingBtn = document.getElementById('send-ping-btn');
+  const consoleEl = document.getElementById('ping-console');
+
+  if (pingBtn && consoleEl) {
+    pingBtn.addEventListener('click', () => {
+      consoleEl.innerHTML = '';
+      pingBtn.setAttribute('disabled', 'true');
+
+      const log = (msg: string, color = 'text-cosmic-muted') => {
+        const line = document.createElement('div');
+        line.className = color;
+        line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        consoleEl.appendChild(line);
+      };
+
+      log('TRANSMITTING ICMP ECHO REQUEST to station HCM-NODE-01...', 'text-cosmic-cyan');
+
+      setTimeout(() => {
+        log('ROUTING via LEO Relay Sat-03 (Altitude: 550km)...', 'text-slate-400');
+      }, 350);
+
+      setTimeout(() => {
+        const latency = (Math.random() * 8 + 14).toFixed(2);
+        log(`REPLY RECEIVED from 1420.405: bytes=64 time=${latency}ms TTL=58`, 'text-emerald-400 font-bold');
+        log(`SIGNAL INTEGRITY: 100% // 0% packet loss // Uplink verified.`, 'text-cosmic-amber');
+        pingBtn.removeAttribute('disabled');
+      }, 850);
+    });
+  }
+</script>

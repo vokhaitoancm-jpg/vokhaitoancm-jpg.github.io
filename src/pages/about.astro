@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HudCard from '../components/ui/HudCard.astro';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
+import { siteConfig } from '../data/site';
+
+const timeline = [
+  {
+    year: '2026 — Hiện tại',
+    title: 'Nghiên Cứu Mạng Máy Tính & Trí Tuệ Nhân Tạo',
+    location: 'TP. Hồ Chí Minh',
+    description: 'Chuyên sâu vào các kiến trúc mạng máy tính hiện đại, mô hình suy luận AI phân tán, phát triển phần mềm hiệu năng cao và các hệ thống viễn trắc không gian.',
+    badge: 'ĐANG DIỄN RA',
+  },
+  {
+    year: '2024 — 2025',
+    title: 'Phát Triển Ứng Dụng Web & Hệ Thống Phân Tán',
+    location: 'Đại Học / Đồ Án Nghiên Cứu',
+    description: 'Xây dựng các nền tảng web static-first, API dịch vụ tốc độ cao, nghiên cứu tích hợp WebGL/Three.js và tối ưu hóa trải nghiệm người dùng theo tiêu chuẩn quốc tế.',
+    badge: 'HOÀN THÀNH',
+  },
+  {
+    year: '2022 — 2024',
+    title: 'Nền Tảng Khoa Học Máy Tính & Lập Trình Hệ Thống',
+    location: 'Khởi đầu học tập',
+    description: 'Nắm vững cấu trúc dữ liệu và giải thuật, lập trình C/C++, Python, kiến trúc máy tính, hệ điều hành Linux và bộ giao thức TCP/IP cơ bản.',
+    badge: 'NỀN TẢNG',
+  },
+];
+
+const skillCategories = [
+  {
+    category: 'Mạng & Viễn Thông',
+    items: ['TCP/IP', 'Routing & Switching', 'Delay-Tolerant Networking (DTN)', 'Wireshark / Packet Analysis', 'Network Security'],
+  },
+  {
+    category: 'Lập Trình & Web',
+    items: ['TypeScript / JavaScript', 'Astro / Next.js', 'React', 'Tailwind CSS', 'HTML5 / Modern Web Standards'],
+  },
+  {
+    category: 'Trí Tuệ Nhân Tạo & Dữ Liệu',
+    items: ['Python', 'Machine Learning Basics', 'NumPy / Pandas', 'Time-series Telemetry Analysis', 'TinyML on Edge'],
+  },
+  {
+    category: 'Hạ Tầng & Công Cụ',
+    items: ['Linux / Bash', 'Git & GitHub Actions', 'Docker Containers', 'Three.js / WebGL', 'VS Code & JetBrains'],
+  },
+];
+---
+
+<BaseLayout
+  title="Thông Tin Bản Thân // Hồ Sơ Phi Hành & Chuyên Môn"
+  description="Hồ sơ cá nhân của Võ Khải Toàn: Định hướng nghiên cứu IT, viễn thông, kỹ nghệ mạng và trí tuệ nhân tạo."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-16">
+    <!-- Bio Header -->
+    <section class="glass-panel p-6 sm:p-10 rounded-2xl border border-cosmic-cyan/20 relative overflow-hidden">
+      <div class="absolute -top-16 -right-16 w-64 h-64 bg-cosmic-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+        <!-- Avatar / Hologram Orb -->
+        <div class="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl border-2 border-cosmic-cyan/40 bg-space-900 p-2 flex items-center justify-center overflow-hidden shadow-[0_0_30px_rgba(77,235,255,0.2)]">
+          <div class="absolute inset-0 bg-gradient-to-tr from-cosmic-cyan/20 via-transparent to-cosmic-violet/20 animate-pulse-slow"></div>
+          <div class="w-full h-full rounded-xl bg-space-800 flex flex-col items-center justify-center text-center p-3">
+            <span class="text-3xl sm:text-4xl mb-1">📡</span>
+            <span class="text-xs font-mono font-bold text-cosmic-cyan uppercase">{siteConfig.callsign}</span>
+            <span class="text-[10px] font-mono text-cosmic-muted mt-1">NODE VERIFIED</span>
+          </div>
+          <!-- Corner HUD crosshairs -->
+          <span class="absolute top-1 left-1 text-[8px] font-mono text-cosmic-cyan">+</span>
+          <span class="absolute top-1 right-1 text-[8px] font-mono text-cosmic-cyan">+</span>
+          <span class="absolute bottom-1 left-1 text-[8px] font-mono text-cosmic-cyan">+</span>
+          <span class="absolute bottom-1 right-1 text-[8px] font-mono text-cosmic-cyan">+</span>
+        </div>
+
+        <!-- Bio Text -->
+        <div class="space-y-4 text-center md:text-left flex-1">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-cyan/30 bg-cosmic-cyan/10 text-xs font-mono text-cosmic-cyan">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>OPERATOR PROFILE // VERIFIED IDENTITY</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl font-heading font-bold text-cosmic-text">
+            {siteConfig.author}
+          </h1>
+
+          <p class="text-sm font-mono text-cosmic-cyan">
+            Kỹ Sư Công Nghệ Thông Tin // Đam Mê Viễn Thông & AI
+          </p>
+
+          <p class="text-sm sm:text-base text-cosmic-muted font-sans leading-relaxed">
+            Mình theo đuổi việc xây dựng các hệ thống phần mềm tinh gọn, ổn định và có khả năng chống chịu cao. Với niềm say mê khám phá khoa học vũ trụ và viễn thông vô tuyến, mình luôn mong muốn kết hợp sức mạnh của trí tuệ nhân tạo và hạ tầng mạng hiện đại để giải quyết các bài toán kết nối trong thế giới số.
+          </p>
+
+          <div class="pt-4 flex flex-wrap items-center justify-center md:justify-start gap-3">
+            <Button href="/contact/" variant="primary" size="sm">
+              <span>GỬI TÍN HIỆU LIÊN HỆ</span>
+              <span>✉</span>
+            </Button>
+            <Button href={siteConfig.socials.github} variant="secondary" size="sm" target="_blank" rel="noopener noreferrer">
+              <span>TRANG GITHUB CÁ NHÂN</span>
+              <span>↗</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signal Transmission Timeline -->
+    <section class="space-y-8">
+      <div class="border-b border-cosmic-cyan/15 pb-4">
+        <div class="text-xs font-mono text-cosmic-cyan uppercase tracking-widest">// MISSION CHRONOLOGY</div>
+        <h2 class="text-2xl sm:text-3xl font-heading font-bold text-cosmic-text">Hành Trình Học Tập & Phát Triển</h2>
+      </div>
+
+      <div class="relative pl-6 sm:pl-8 border-l-2 border-cosmic-cyan/30 space-y-10">
+        {timeline.map((item) => (
+          <div class="relative group">
+            <!-- Glowing node on the timeline line -->
+            <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-space-950 border-2 border-cosmic-cyan flex items-center justify-center group-hover:scale-125 transition-transform shadow-[0_0_10px_rgba(77,235,255,0.8)]">
+              <span class="w-1.5 h-1.5 rounded-full bg-cosmic-cyan"></span>
+            </div>
+
+            <HudCard glow={true}>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs font-mono">
+                <span class="text-cosmic-cyan font-bold">{item.year}</span>
+                <Badge variant={item.badge === 'ĐANG DIỄN RA' ? 'cyan' : 'violet'}>
+                  {item.badge}
+                </Badge>
+              </div>
+
+              <h3 class="text-lg font-heading font-bold text-cosmic-text mb-1">
+                {item.title}
+              </h3>
+
+              <div class="text-xs font-mono text-cosmic-muted/70 mb-3">
+                📍 {item.location}
+              </div>
+
+              <p class="text-sm text-cosmic-muted leading-relaxed font-sans">
+                {item.description}
+              </p>
+            </HudCard>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Skills Matrix -->
+    <section class="space-y-8">
+      <div class="border-b border-cosmic-cyan/15 pb-4">
+        <div class="text-xs font-mono text-cosmic-cyan uppercase tracking-widest">// CAPABILITY MATRIX</div>
+        <h2 class="text-2xl sm:text-3xl font-heading font-bold text-cosmic-text">Bộ Kỹ Năng Kỹ Thuật</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {skillCategories.map((group) => (
+          <HudCard glow={true}>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="w-2 h-2 rounded-full bg-cosmic-cyan animate-pulse"></span>
+              <h3 class="text-base font-heading font-bold text-cosmic-text">
+                {group.category}
+              </h3>
+            </div>
+
+            <ul class="space-y-2">
+              {group.items.map((skill) => (
+                <li class="flex items-center justify-between p-2 rounded bg-space-900/60 border border-cosmic-cyan/10 text-xs font-mono">
+                  <span class="text-slate-200">{skill}</span>
+                  <span class="text-cosmic-cyan">READY</span>
+                </li>
+              ))}
+            </ul>
+          </HudCard>
+        ))}
+      </div>
+    </section>
+
+    <!-- Deep Space Equipment & Station Rig -->
+    <section class="glass-panel p-6 sm:p-8 rounded-xl border border-cosmic-cyan/20">
+      <div class="flex items-center justify-between border-b border-cosmic-cyan/15 pb-3 mb-4 font-mono text-xs">
+        <span class="text-cosmic-cyan font-bold">TERMINAL // RIG & WORKSTATION SPECS</span>
+        <span class="text-cosmic-muted">SYSTEM STATUS: NOMINAL</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs text-cosmic-muted">
+        <div class="bg-space-900 p-3 rounded border border-cosmic-cyan/10 space-y-1">
+          <div class="text-cosmic-cyan text-[11px]">HỆ ĐIỀU HÀNH & KERNEL</div>
+          <div class="text-cosmic-text">Linux / Windows 11 Pro</div>
+          <div class="text-[10px] text-slate-500">WSL2 Ubuntu 24.04 LTS</div>
+        </div>
+
+        <div class="bg-space-900 p-3 rounded border border-cosmic-cyan/10 space-y-1">
+          <div class="text-cosmic-cyan text-[11px]">MÔI TRƯỜNG PHÁT TRIỂN</div>
+          <div class="text-cosmic-text">VS Code + Neovim</div>
+          <div class="text-[10px] text-slate-500">Zsh + Starship Prompt</div>
+        </div>
+
+        <div class="bg-space-900 p-3 rounded border border-cosmic-cyan/10 space-y-1">
+          <div class="text-cosmic-cyan text-[11px]">GIAO THỨC & THÍ NGHIỆM</div>
+          <div class="text-cosmic-text">Wireshark + GNU Radio</div>
+          <div class="text-[10px] text-slate-500">RTL-SDR v4 Dongle</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="404 // Mất Dấu Tín Hiệu Không Gian"
+  description="Tọa độ dữ liệu không tồn tại hoặc đã trôi dạt vào vùng tối của vũ trụ số."
+>
+  <div class="min-h-[70vh] flex items-center justify-center px-4 py-16 text-center">
+    <div class="glass-panel p-8 sm:p-12 rounded-2xl border border-cosmic-cyan/30 max-w-lg w-full relative overflow-hidden">
+      <!-- Glow effect -->
+      <div class="absolute -top-16 -left-16 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-amber/30 bg-cosmic-amber/10 text-xs font-mono text-cosmic-amber mb-6">
+        <span class="w-2 h-2 rounded-full bg-cosmic-amber animate-ping"></span>
+        <span>ERROR 404 // ANOMALY DETECTED</span>
+      </div>
+
+      <div class="text-6xl sm:text-7xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-b from-cosmic-cyan to-purple-600 mb-4 glow-text-cyan">
+        404
+      </div>
+
+      <h1 class="text-xl sm:text-2xl font-heading font-bold text-cosmic-text mb-3">
+        Mất Dấu Tín Hiệu Trong Không Gian
+      </h1>
+
+      <p class="text-sm text-cosmic-muted font-sans leading-relaxed mb-8">
+        Tọa độ packet bạn đang tìm kiếm không phản hồi hoặc đã bị lệch khỏi quỹ đạo liên lạc của trạm mặt đất.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 font-mono text-xs">
+        <Button href="/" variant="primary" size="md">
+          <span>TÁI ĐỊNH HƯỚNG VỀ TRÁI ĐẤT</span>
+          <span>🌍</span>
+        </Button>
+        <Button href="/posts/" variant="secondary" size="md">
+          <span>TÌM KIẾM BÀI VIẾT</span>
+          <span>🔍</span>
+        </Button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

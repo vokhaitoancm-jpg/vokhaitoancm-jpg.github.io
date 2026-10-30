@@ -1,0 +1,285 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CosmicHero3D from '../components/effects/CosmicHero3D.astro';
+import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
+import HudCard from '../components/ui/HudCard.astro';
+import { siteConfig, domains } from '../data/site';
+import { getCollection } from 'astro:content';
+
+// Query featured projects and posts
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const allPosts = await getCollection('posts');
+const latestPosts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="relative min-h-[90vh] flex flex-col justify-center overflow-hidden border-b border-cosmic-cyan/15 pt-8 sm:pt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12">
+      <!-- Left Column: Mission Briefing -->
+      <div class="lg:col-span-7 space-y-6 text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-cyan/30 bg-cosmic-cyan/10 font-mono text-xs text-cosmic-cyan">
+          <span class="w-2 h-2 rounded-full bg-cosmic-cyan animate-ping"></span>
+          <span>STATION BEACON // ACTIVE TRANSMISSION</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-cosmic-text tracking-tight leading-[1.1]">
+          TRANSMITTING IDEAS ACROSS THE <span class="text-transparent bg-clip-text bg-gradient-to-r from-cosmic-cyan via-purple-400 to-cosmic-amber glow-text-cyan">DIGITAL UNIVERSE</span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-cosmic-muted leading-relaxed max-w-2xl font-sans">
+          Xin chào, mình là <span class="text-cosmic-text font-semibold">{siteConfig.author}</span>. Không gian này ghi chép các dự án công nghệ, nghiên cứu hệ thống mạng máy tính, viễn thông và mô hình trí tuệ nhân tạo.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <Button href="/projects/" variant="primary" size="md">
+            <span>KHÁM PHÁ DỰ ÁN</span>
+            <span>›</span>
+          </Button>
+
+          <Button href="/posts/" variant="secondary" size="md">
+            <span>ĐỌC BÀI VIẾT</span>
+            <span class="text-cosmic-cyan font-mono text-xs">[SIGNAL]</span>
+          </Button>
+
+          <Button href="/lab/" variant="amber" size="md">
+            <span>LAB THÍ NGHIỆM</span>
+            <span>⚡</span>
+          </Button>
+        </div>
+
+        <!-- Telemetry HUD Bar -->
+        <div class="pt-6 border-t border-cosmic-cyan/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono text-cosmic-muted">
+          <div>
+            <div class="text-[10px] text-cosmic-cyan/70 uppercase">Tần số phát</div>
+            <div class="text-cosmic-text font-semibold">{siteConfig.frequency.split(' ')[0]}</div>
+          </div>
+          <div>
+            <div class="text-[10px] text-cosmic-cyan/70 uppercase">Băng thông</div>
+            <div class="text-cosmic-text font-semibold">10 Gbps MESH</div>
+          </div>
+          <div>
+            <div class="text-[10px] text-cosmic-cyan/70 uppercase">Trạng thái Node</div>
+            <div class="text-emerald-400 font-semibold">ONLINE 99.98%</div>
+          </div>
+          <div>
+            <div class="text-[10px] text-cosmic-cyan/70 uppercase">Mã trạm</div>
+            <div class="text-cosmic-text font-semibold">HCM-ORBIT-01</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive 3D Sphere & Orbit HUD -->
+      <div class="lg:col-span-5 relative flex items-center justify-center">
+        <CosmicHero3D />
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Mission Control (Domains of Expertise) -->
+  <section class="py-20 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 border-b border-cosmic-cyan/15 pb-6">
+      <div>
+        <div class="text-xs font-mono text-cosmic-cyan tracking-widest uppercase mb-1">// MISSION DIRECTIVES</div>
+        <h2 class="text-2xl sm:text-4xl font-heading font-bold text-cosmic-text">Lĩnh Vực Trọng Tâm & Chuyên Môn</h2>
+      </div>
+      <p class="text-sm font-mono text-cosmic-muted max-w-md">
+        Các trục nghiên cứu công nghệ viễn thông, mạng máy tính, trí tuệ nhân tạo và kỹ nghệ phần mềm.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {domains.map((dom) => (
+        <HudCard glow={true}>
+          <div class="flex items-start justify-between mb-4">
+            <span class="px-2 py-0.5 rounded font-mono text-xs bg-cosmic-cyan/10 text-cosmic-cyan border border-cosmic-cyan/30">
+              SYS-CODE // {dom.code}
+            </span>
+            <span class="text-cosmic-muted/40 font-mono text-xs">PORT: 443</span>
+          </div>
+
+          <h3 class="text-xl font-heading font-bold text-cosmic-text mb-2.5 group-hover:text-cosmic-cyan transition-colors">
+            {dom.title}
+          </h3>
+
+          <p class="text-sm text-cosmic-muted leading-relaxed font-sans mb-6">
+            {dom.description}
+          </p>
+
+          <div class="pt-4 border-t border-cosmic-cyan/10 flex flex-wrap gap-1.5">
+            {dom.skills.map((skill) => (
+              <span class="px-2 py-0.5 rounded text-xs font-mono bg-space-800 text-slate-300 border border-cosmic-cyan/10">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </HudCard>
+      ))}
+    </div>
+  </section>
+
+  <!-- Section 2: Featured Projects -->
+  <section class="py-20 relative bg-space-950/60 border-t border-b border-cosmic-cyan/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 border-b border-cosmic-cyan/15 pb-6">
+        <div>
+          <div class="text-xs font-mono text-cosmic-cyan tracking-widest uppercase mb-1">// ORBITAL DEPLOYMENTS</div>
+          <h2 class="text-2xl sm:text-4xl font-heading font-bold text-cosmic-text">Dự Án Tiêu Biểu</h2>
+        </div>
+        <a href="/projects/" class="text-xs font-mono text-cosmic-cyan hover:underline flex items-center gap-1">
+          XEM TẤT CẢ DỰ ÁN <span>›</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {featuredProjects.map((project) => (
+          <HudCard glow={true} class="flex flex-col justify-between h-full">
+            <div>
+              <div class="flex items-center justify-between mb-3 text-xs font-mono">
+                <Badge variant="cyan">{project.data.category}</Badge>
+                <span class="text-emerald-400 font-bold">{project.data.status}</span>
+              </div>
+
+              <h3 class="text-xl font-heading font-bold text-cosmic-text mb-2 hover:text-cosmic-cyan transition-colors">
+                <a href={`/projects/${project.id}/`}>
+                  {project.data.title}
+                </a>
+              </h3>
+
+              <p class="text-sm text-cosmic-muted leading-relaxed mb-6 font-sans line-clamp-3">
+                {project.data.description}
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                {project.data.tags.slice(0, 3).map((tag) => (
+                  <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-space-800 text-slate-400 border border-cosmic-cyan/10">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+
+              <div class="pt-4 border-t border-cosmic-cyan/10 flex items-center justify-between">
+                <a
+                  href={`/projects/${project.id}/`}
+                  class="text-xs font-mono text-cosmic-cyan hover:underline flex items-center gap-1"
+                >
+                  CHI TIẾT CASE STUDY <span>→</span>
+                </a>
+                {project.data.demoUrl && (
+                  <a
+                    href={project.data.demoUrl}
+                    class="text-xs font-mono text-cosmic-amber hover:underline"
+                  >
+                    DEMO ↗
+                  </a>
+                )}
+              </div>
+            </div>
+          </HudCard>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Latest Transmissions (Blog Posts) -->
+  <section class="py-20 relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 border-b border-cosmic-cyan/15 pb-6">
+      <div>
+        <div class="text-xs font-mono text-cosmic-cyan tracking-widest uppercase mb-1">// SIGNAL ARCHIVE</div>
+        <h2 class="text-2xl sm:text-4xl font-heading font-bold text-cosmic-text">Bài Viết & Nghiên Cứu Mới Nhất</h2>
+      </div>
+      <a href="/posts/" class="text-xs font-mono text-cosmic-cyan hover:underline flex items-center gap-1">
+        TẤT CẢ BÀI VIẾT <span>›</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {latestPosts.map((post) => {
+        const dateStr = new Intl.DateTimeFormat('vi-VN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        }).format(post.data.pubDate);
+
+        return (
+          <HudCard glow={true} class="flex flex-col justify-between h-full">
+            <div>
+              <div class="flex items-center justify-between mb-3 text-xs font-mono text-cosmic-muted">
+                <Badge variant="violet">{post.data.category}</Badge>
+                <span>{dateStr}</span>
+              </div>
+
+              <h3 class="text-lg font-heading font-bold text-cosmic-text mb-2.5 hover:text-cosmic-cyan transition-colors">
+                <a href={`/posts/${post.id}/`}>
+                  {post.data.title}
+                </a>
+              </h3>
+
+              <p class="text-sm text-cosmic-muted leading-relaxed mb-6 font-sans line-clamp-3">
+                {post.data.description}
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {post.data.tags.map((t) => (
+                  <span class="text-[11px] font-mono text-cosmic-cyan/70">
+                    #{t}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={`/posts/${post.id}/`}
+                class="inline-flex items-center gap-1 text-xs font-mono text-cosmic-cyan hover:underline pt-3 border-t border-cosmic-cyan/10 w-full"
+              >
+                ĐỌC TOÀN BỘ TÍN HIỆU <span>››</span>
+              </a>
+            </div>
+          </HudCard>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Section 4: Deep Space Constellation Relay Nodes -->
+  <section class="py-16 relative bg-space-900/40 border-t border-cosmic-cyan/15">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-cyan/30 bg-cosmic-cyan/10 font-mono text-xs text-cosmic-cyan">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>UPLINK READY FOR TRANSMISSION</span>
+      </div>
+
+      <h2 class="text-2xl sm:text-4xl font-heading font-bold text-cosmic-text">
+        Bạn Muốn Kết Nối Hoặc Thảo Luận Về Dự Án?
+      </h2>
+
+      <p class="text-sm sm:text-base text-cosmic-muted max-w-2xl mx-auto font-sans">
+        Kênh liên lạc luôn mở để trao đổi về công nghệ mạng, giải pháp trí tuệ nhân tạo, xây dựng ứng dụng web hoặc hợp tác nghiên cứu.
+      </p>
+
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+        <Button href="/contact/" variant="primary" size="lg">
+          <span>THIẾT LẬP KẾT NỐI UPLINK</span>
+          <span>⚡</span>
+        </Button>
+        <Button href={siteConfig.socials.github} variant="secondary" size="lg" target="_blank" rel="noopener noreferrer">
+          <span>REPO GITHUB</span>
+          <span>↗</span>
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

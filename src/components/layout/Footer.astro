@@ -1,0 +1,110 @@
+---
+import { siteConfig } from '../../data/site';
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-cosmic-cyan/15 bg-space-950/80 backdrop-blur-md relative z-20 text-xs font-mono text-cosmic-muted">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <!-- Col 1: System info -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cosmic-cyan animate-ping"></span>
+          <span class="text-sm font-bold text-cosmic-text font-heading">DEEP SPACE NODE</span>
+        </div>
+        <p class="text-[12px] leading-relaxed text-cosmic-muted/80">
+          Personal digital transmitter exploring communications, machine intelligence, distributed networks and high-craft software.
+        </p>
+        <p class="text-[11px] text-cosmic-cyan/80">
+          STATION: {siteConfig.station}
+        </p>
+      </div>
+
+      <!-- Col 2: Navigation Links -->
+      <div class="space-y-2">
+        <div class="text-xs uppercase tracking-wider text-cosmic-text font-semibold">Sub-Networks</div>
+        <ul class="space-y-1.5 text-[12px]">
+          {siteConfig.navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="hover:text-cosmic-cyan transition-colors flex items-center gap-1.5">
+                <span class="text-cosmic-cyan/50">›</span> {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 3: Telemetry Coordinates -->
+      <div class="space-y-2">
+        <div class="text-xs uppercase tracking-wider text-cosmic-text font-semibold">Telemetry Data</div>
+        <div class="bg-space-900/80 border border-cosmic-cyan/10 rounded p-2.5 space-y-1 text-[11px]">
+          <div class="flex justify-between">
+            <span>UPLINK FREQ:</span>
+            <span class="text-cosmic-cyan">1420.405 MHz</span>
+          </div>
+          <div class="flex justify-between">
+            <span>PACKET PROTOCOL:</span>
+            <span class="text-cosmic-amber">ASTRO/TCP</span>
+          </div>
+          <div class="flex justify-between">
+            <span>PING LATENCY:</span>
+            <span class="text-emerald-400">0.024 MS</span>
+          </div>
+          <div class="flex justify-between">
+            <span>HOST:</span>
+            <span class="text-cosmic-text">GITHUB PAGES</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 4: Feeds & Signals -->
+      <div class="space-y-3">
+        <div class="text-xs uppercase tracking-wider text-cosmic-text font-semibold">Connect & Feeds</div>
+        <div class="flex flex-col gap-2 text-[12px]">
+          <a
+            href={siteConfig.socials.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-cosmic-cyan transition-colors flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-cosmic-cyan" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            GitHub Repository
+          </a>
+          <a
+            href="/rss.xml"
+            class="hover:text-cosmic-amber transition-colors flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-cosmic-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
+            </svg>
+            RSS Feed Transmission
+          </a>
+          <a
+            href="/sitemap-index.xml"
+            class="hover:text-cosmic-violet transition-colors flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-cosmic-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+            Sitemap Coordinates
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom line -->
+    <div class="pt-6 border-t border-cosmic-cyan/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div>
+        &copy; {currentYear} {siteConfig.author}. Cosmic Signal Architecture. All signals clear.
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-cosmic-cyan/10 border border-cosmic-cyan/30 text-cosmic-cyan text-[11px]">
+          <span class="w-1.5 h-1.5 rounded-full bg-cosmic-cyan"></span>
+          ENCRYPTED VIA SHA-256
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>

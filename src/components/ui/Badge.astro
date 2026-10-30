@@ -1,0 +1,21 @@
+---
+interface Props {
+  variant?: 'cyan' | 'violet' | 'amber' | 'emerald';
+  class?: string;
+}
+
+const { variant = 'cyan', class: className = '' } = Astro.props;
+
+const variants = {
+  cyan: 'border-cosmic-cyan/30 text-cosmic-cyan bg-cosmic-cyan/10',
+  violet: 'border-cosmic-violet/30 text-cosmic-violet bg-cosmic-violet/10',
+  amber: 'border-cosmic-amber/30 text-cosmic-amber bg-cosmic-amber/10',
+  emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10',
+};
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium border ${variants[variant]} ${className}`}
+>
+  <slot />
+</span>

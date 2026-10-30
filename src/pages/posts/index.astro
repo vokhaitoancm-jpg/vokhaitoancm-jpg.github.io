@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HudCard from '../../components/ui/HudCard.astro';
+import Badge from '../../components/ui/Badge.astro';
+import { getCollection } from 'astro:content';
+
+// Get all non-draft posts
+const allPosts = await getCollection('posts');
+const posts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+// Extract all unique tags
+const allTags = Array.from(new Set(posts.flatMap((p) => p.data.tags)));
+---
+
+<BaseLayout
+  title="Signal Archive // Lưu Trữ Tín Hiệu & Bài Viết"
+  description="Kho lưu trữ các bài viết, nghiên cứu kỹ thuật về mạng máy tính, viễn thông và trí tuệ nhân tạo."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-10">
+    <!-- Header -->
+    <div class="border-b border-cosmic-cyan/15 pb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-cyan/30 bg-cosmic-cyan/10 text-xs font-mono text-cosmic-cyan mb-3">
+        <span class="w-2 h-2 rounded-full bg-cosmic-cyan animate-ping"></span>
+        <span>ARCHIVE TRANSMISSIONS // {posts.length} TÍN HIỆU ĐƯỢC GHI NHẬN</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-heading font-bold text-cosmic-text">
+        Signal Archive
+      </h1>
+      <p class="text-sm sm:text-base text-cosmic-muted font-sans mt-2 max-w-2xl">
+        Các bản ghi kỹ thuật, phân tích giao thức và kinh nghiệm thực tiễn được lưu trữ dưới định dạng Markdown thuần.
+      </p>
+    </div>
+
+    <!-- Live Search & Tag Filter HUD -->
+    <div class="glass-panel p-4 sm:p-6 rounded-xl border border-cosmic-cyan/20 space-y-4">
+      <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-cosmic-cyan font-mono text-sm">
+          🔍
+        </span>
+        <input
+          type="text"
+          id="post-search"
+          placeholder="Tìm kiếm theo tiêu đề, nội dung, hoặc từ khóa..."
+          class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-space-900 border border-cosmic-cyan/25 text-cosmic-text placeholder-cosmic-muted/60 text-sm font-mono focus:outline-none focus:border-cosmic-cyan focus:ring-1 focus:ring-cosmic-cyan transition-all"
+        />
+      </div>
+
+      <!-- Tag Filters -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-cosmic-cyan/10">
+        <span class="text-xs font-mono text-cosmic-cyan">LỌC TAG:</span>
+        <button
+          type="button"
+          class="tag-filter-btn px-2.5 py-1 rounded text-xs font-mono border border-cosmic-cyan bg-cosmic-cyan text-space-950 font-bold transition-all"
+          data-tag="all"
+        >
+          ALL
+        </button>
+        {allTags.map((tag) => (
+          <button
+            type="button"
+            class="tag-filter-btn px-2.5 py-1 rounded text-xs font-mono border border-cosmic-cyan/20 bg-space-900 text-cosmic-muted hover:text-cosmic-cyan hover:border-cosmic-cyan/50 transition-all"
+            data-tag={tag.toLowerCase()}
+          >
+            #{tag}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Post Grid -->
+    <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post) => {
+        const formattedDate = new Intl.DateTimeFormat('vi-VN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        }).format(post.data.pubDate);
+
+        return (
+          <div
+            class="post-card flex flex-col h-full"
+            data-title={post.data.title.toLowerCase()}
+            data-desc={post.data.description.toLowerCase()}
+            data-tags={post.data.tags.map((t) => t.toLowerCase()).join(',')}
+          >
+            <HudCard glow={true} class="flex flex-col justify-between h-full">
+              <div>
+                <div class="flex items-center justify-between mb-3 text-xs font-mono text-cosmic-muted">
+                  <Badge variant="violet">{post.data.category}</Badge>
+                  <span>{formattedDate}</span>
+                </div>
+
+                <h2 class="text-lg font-heading font-bold text-cosmic-text mb-2 hover:text-cosmic-cyan transition-colors">
+                  <a href={`/posts/${post.id}/`}>
+                    {post.data.title}
+                  </a>
+                </h2>
+
+                <p class="text-sm text-cosmic-muted leading-relaxed font-sans line-clamp-3 mb-6">
+                  {post.data.description}
+                </p>
+              </div>
+
+              <div>
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  {post.data.tags.map((t) => (
+                    <span class="text-[11px] font-mono text-cosmic-cyan/80">
+                      #{t}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href={`/posts/${post.id}/`}
+                  class="inline-flex items-center gap-1.5 text-xs font-mono text-cosmic-cyan hover:underline pt-3 border-t border-cosmic-cyan/10 w-full"
+                >
+                  XEM NỘI DUNG TÍN HIỆU <span>››</span>
+                </a>
+              </div>
+            </HudCard>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Empty search result fallback -->
+    <div id="no-results" class="hidden glass-panel p-10 rounded-xl text-center space-y-3 font-mono text-xs text-cosmic-muted">
+      <div class="text-2xl">📡</div>
+      <div class="text-cosmic-text font-bold text-sm">KHÔNG TÌM THẤY TÍN HIỆU TƯƠNG ỨNG</div>
+      <p>Thử tìm kiếm với từ khóa khác hoặc bỏ chọn bộ lọc tag.</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('post-search') as HTMLInputElement | null;
+  const tagButtons = document.querySelectorAll('.tag-filter-btn');
+  const postCards = document.querySelectorAll('.post-card');
+  const noResults = document.getElementById('no-results');
+
+  let activeTag = 'all';
+  let searchTerm = '';
+
+  function filterPosts() {
+    let visibleCount = 0;
+
+    postCards.forEach((card) => {
+      const el = card as HTMLElement;
+      const title = el.getAttribute('data-title') || '';
+      const desc = el.getAttribute('data-desc') || '';
+      const tags = (el.getAttribute('data-tags') || '').split(',');
+
+      const matchesSearch =
+        searchTerm === '' ||
+        title.includes(searchTerm) ||
+        desc.includes(searchTerm) ||
+        tags.some((t) => t.includes(searchTerm));
+
+      const matchesTag =
+        activeTag === 'all' || tags.includes(activeTag);
+
+      if (matchesSearch && matchesTag) {
+        el.style.display = 'flex';
+        visibleCount++;
+      } else {
+        el.style.display = 'none';
+      }
+    });
+
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+  }
+
+  // Check URL query param for initial tag
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialTag = urlParams.get('tag');
+  if (initialTag) {
+    activeTag = initialTag.toLowerCase();
+    tagButtons.forEach((btn) => {
+      const btnTag = (btn as HTMLElement).dataset.tag;
+      if (btnTag === activeTag) {
+        btn.classList.add('bg-cosmic-cyan', 'text-space-950', 'font-bold');
+        btn.classList.remove('bg-space-900', 'text-cosmic-muted');
+      } else {
+        btn.classList.remove('bg-cosmic-cyan', 'text-space-950', 'font-bold');
+        btn.classList.add('bg-space-900', 'text-cosmic-muted');
+      }
+    });
+    filterPosts();
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = (e.target as HTMLInputElement).value.trim().toLowerCase();
+      filterPosts();
+    });
+  }
+
+  tagButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeTag = (btn as HTMLElement).dataset.tag || 'all';
+
+      tagButtons.forEach((b) => {
+        b.classList.remove('bg-cosmic-cyan', 'text-space-950', 'font-bold');
+        b.classList.add('bg-space-900', 'text-cosmic-muted');
+      });
+
+      btn.classList.add('bg-cosmic-cyan', 'text-space-950', 'font-bold');
+      btn.classList.remove('bg-space-900', 'text-cosmic-muted');
+
+      filterPosts();
+    });
+  });
+</script>

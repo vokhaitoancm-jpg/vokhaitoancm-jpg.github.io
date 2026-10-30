@@ -1,0 +1,57 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'amber';
+  size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  target?: string;
+  rel?: string;
+  id?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  target,
+  rel,
+  id,
+} = Astro.props;
+
+const baseStyles =
+  'relative inline-flex items-center justify-center font-mono font-medium transition-all duration-300 rounded focus:outline-none focus:ring-2 focus:ring-cosmic-cyan cursor-pointer select-none';
+
+const sizeStyles = {
+  sm: 'px-3 py-1.5 text-xs gap-1.5',
+  md: 'px-5 py-2.5 text-sm gap-2',
+  lg: 'px-7 py-3 text-base gap-2.5',
+};
+
+const variantStyles = {
+  primary:
+    'bg-cosmic-cyan/15 text-cosmic-cyan border border-cosmic-cyan hover:bg-cosmic-cyan hover:text-space-950 hover:shadow-[0_0_20px_rgba(77,235,255,0.6)] active:scale-[0.98]',
+  secondary:
+    'bg-space-800 text-cosmic-text border border-cosmic-cyan/20 hover:border-cosmic-cyan/50 hover:bg-space-700 hover:text-cosmic-cyan active:scale-[0.98]',
+  outline:
+    'bg-transparent text-cosmic-muted border border-cosmic-muted/30 hover:border-cosmic-cyan hover:text-cosmic-cyan active:scale-[0.98]',
+  amber:
+    'bg-cosmic-amber/15 text-cosmic-amber border border-cosmic-amber hover:bg-cosmic-amber hover:text-space-950 hover:shadow-[0_0_20px_rgba(255,202,128,0.5)] active:scale-[0.98]',
+};
+
+const classes = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes} target={target} rel={rel} id={id}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} id={id}>
+      <slot />
+    </button>
+  )
+}

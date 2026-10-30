@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HudCard from '../../components/ui/HudCard.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const categories = ['ALL', 'Web', 'AI', 'Telecommunications', 'Security'];
+
+const statusVariants = {
+  ONLINE: 'emerald' as const,
+  'IN ORBIT': 'cyan' as const,
+  PROTOTYPE: 'amber' as const,
+  ARCHIVED: 'violet' as const,
+};
+---
+
+<BaseLayout
+  title="Dự Án // Danh Mục Nhiệm Vụ & Hệ Thống Đã Triển Khai"
+  description="Danh sách các dự án kỹ thuật phần mềm, viễn thông và AI được phát triển bởi Võ Khải Toàn."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-10">
+    <!-- Header -->
+    <div class="border-b border-cosmic-cyan/15 pb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-cyan/30 bg-cosmic-cyan/10 text-xs font-mono text-cosmic-cyan mb-3">
+        <span class="w-2 h-2 rounded-full bg-cosmic-cyan animate-ping"></span>
+        <span>MISSION PAYLOADS // {projects.length} HỆ THỐNG TRIỂN KHAI</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-heading font-bold text-cosmic-text">
+        Dự Án Kỹ Thuật
+      </h1>
+      <p class="text-sm sm:text-base text-cosmic-muted font-sans mt-2 max-w-2xl">
+        Các giải pháp phần mềm, giao thức mạng và mô hình máy học được xây dựng với kiến trúc rõ ràng, mã nguồn mở và khả năng vận hành thực tế.
+      </p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="flex flex-wrap items-center gap-2">
+      {categories.map((cat, idx) => (
+        <button
+          type="button"
+          class={`cat-filter-btn px-4 py-2 rounded text-xs font-mono border transition-all ${
+            idx === 0
+              ? 'border-cosmic-cyan bg-cosmic-cyan text-space-950 font-bold'
+              : 'border-cosmic-cyan/20 bg-space-900 text-cosmic-muted hover:text-cosmic-cyan hover:border-cosmic-cyan/40'
+          }`}
+          data-category={cat.toLowerCase()}
+        >
+          {cat.toUpperCase()}
+        </button>
+      ))}
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {projects.map((proj) => (
+        <div class="project-item flex flex-col" data-cat={proj.data.category.toLowerCase()}>
+          <HudCard glow={true} class="flex flex-col justify-between h-full">
+            <div>
+              <div class="flex items-center justify-between mb-4 text-xs font-mono">
+                <Badge variant="cyan">{proj.data.category}</Badge>
+                <Badge variant={statusVariants[proj.data.status]}>
+                  STATUS: {proj.data.status}
+                </Badge>
+              </div>
+
+              <h2 class="text-xl font-heading font-bold text-cosmic-text mb-2.5 hover:text-cosmic-cyan transition-colors">
+                <a href={`/projects/${proj.id}/`}>
+                  {proj.data.title}
+                </a>
+              </h2>
+
+              <p class="text-sm text-cosmic-muted leading-relaxed font-sans mb-6">
+                {proj.data.description}
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                {proj.data.tags.map((t) => (
+                  <span class="px-2 py-0.5 rounded text-xs font-mono bg-space-800 text-slate-300 border border-cosmic-cyan/15">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div class="pt-4 border-t border-cosmic-cyan/10 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                <a
+                  href={`/projects/${proj.id}/`}
+                  class="text-cosmic-cyan hover:underline flex items-center gap-1"
+                >
+                  XEM CASE STUDY <span>››</span>
+                </a>
+
+                <div class="flex items-center gap-3">
+                  {proj.data.demoUrl && (
+                    <a
+                      href={proj.data.demoUrl}
+                      class="text-cosmic-amber hover:underline flex items-center gap-1"
+                    >
+                      LIVE DEMO ↗
+                    </a>
+                  )}
+                  {proj.data.githubUrl && (
+                    <a
+                      href={proj.data.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-cosmic-muted hover:text-cosmic-text flex items-center gap-1"
+                    >
+                      CODE ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </HudCard>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll('.cat-filter-btn');
+  const projectItems = document.querySelectorAll('.project-item');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = (btn as HTMLElement).dataset.category || 'all';
+
+      buttons.forEach((b) => {
+        b.classList.remove('bg-cosmic-cyan', 'text-space-950', 'font-bold');
+        b.classList.add('bg-space-900', 'text-cosmic-muted');
+      });
+
+      btn.classList.add('bg-cosmic-cyan', 'text-space-950', 'font-bold');
+      btn.classList.remove('bg-space-900', 'text-cosmic-muted');
+
+      projectItems.forEach((item) => {
+        const el = item as HTMLElement;
+        const cat = el.getAttribute('data-cat') || '';
+        if (selected === 'all' || cat === selected) {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

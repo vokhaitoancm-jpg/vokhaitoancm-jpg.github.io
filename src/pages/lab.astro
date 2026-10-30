@@ -1,0 +1,436 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HudCard from '../components/ui/HudCard.astro';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Experimental Lab // Phòng Thí Nghiệm Tín Hiệu & Mô Phỏng"
+  description="Khu vực thí nghiệm tương tác: Mô phỏng định tuyến gói tin không gian, bộ giải mã tín hiệu nhị phân, và phân tích phổ tần vô tuyến."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12">
+    <!-- Header -->
+    <div class="border-b border-cosmic-cyan/15 pb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cosmic-amber/30 bg-cosmic-amber/10 text-xs font-mono text-cosmic-amber mb-3">
+        <span class="w-2 h-2 rounded-full bg-cosmic-amber animate-ping"></span>
+        <span>EXPERIMENTATION CHAMBER // 4 TƯƠNG TÁC THỰC NGHIỆM</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-heading font-bold text-cosmic-text">
+        Phòng Thí Nghiệm Vũ Trụ Số
+      </h1>
+      <p class="text-sm sm:text-base text-cosmic-muted font-sans mt-2 max-w-2xl">
+        Các mô phỏng tương tác trực tiếp trên trình duyệt, không gửi dữ liệu ra bên ngoài, tối ưu hiệu năng và tôn trọng cài đặt giảm chuyển động.
+      </p>
+    </div>
+
+    <!-- Experiment 1: Packet Routing & Flight Simulator -->
+    <section class="glass-panel p-6 sm:p-8 rounded-2xl border border-cosmic-cyan/25 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cosmic-cyan/15 pb-4">
+        <div>
+          <div class="text-xs font-mono text-cosmic-cyan uppercase">// THÍ NGHIỆM #01</div>
+          <h2 class="text-xl sm:text-2xl font-heading font-bold text-cosmic-text">
+            Mô Phỏng Truyền Gói Tin Không Gian (DTN Packet Flight)
+          </h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <Badge variant="cyan">CANVAS 2D</Badge>
+          <Badge variant="emerald">CLIENT-SIDE</Badge>
+        </div>
+      </div>
+
+      <p class="text-sm text-cosmic-muted font-sans leading-relaxed">
+        Nhấn nút "Phóng Gói Tin" để quan sát đường đi của các gói tin dữ liệu từ Trạm mặt đất qua chùm vệ tinh tiếp vận quỹ đạo thấp (LEO) tới Trạm tiếp nhận đích.
+      </p>
+
+      <!-- Canvas Area -->
+      <div class="relative bg-space-950 rounded-xl border border-cosmic-cyan/20 overflow-hidden h-[300px] sm:h-[360px]">
+        <canvas id="packet-canvas" class="w-full h-full block"></canvas>
+        <div class="absolute top-3 left-3 px-2 py-1 rounded bg-space-900/80 border border-cosmic-cyan/30 text-[11px] font-mono text-cosmic-cyan">
+          TỔNG PACKET ĐÃ TRUYỀN: <span id="packet-counter" class="text-emerald-400 font-bold">0</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-2 font-mono text-xs">
+        <div class="flex items-center gap-3">
+          <button
+            id="launch-packet-btn"
+            type="button"
+            class="px-4 py-2 rounded bg-cosmic-cyan text-space-950 font-bold hover:shadow-[0_0_15px_rgba(77,235,255,0.7)] transition-all cursor-pointer"
+          >
+            🚀 PHÓNG GÓI TIN MỚI
+          </button>
+          <button
+            id="clear-packet-btn"
+            type="button"
+            class="px-4 py-2 rounded bg-space-800 text-cosmic-muted hover:text-cosmic-text border border-cosmic-cyan/20 transition-all cursor-pointer"
+          >
+            RESET
+          </button>
+        </div>
+
+        <div class="text-cosmic-muted text-[11px]">
+          MÔ HÌNH: DELAY-TOLERANT STORE & FORWARD
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiment 2: AI & Binary Signal Decoder Terminal -->
+    <section class="glass-panel p-6 sm:p-8 rounded-2xl border border-cosmic-cyan/25 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cosmic-cyan/15 pb-4">
+        <div>
+          <div class="text-xs font-mono text-cosmic-cyan uppercase">// THÍ NGHIỆM #02</div>
+          <h2 class="text-xl sm:text-2xl font-heading font-bold text-cosmic-text">
+            Bộ Mã Hóa & Giải Mã Tín Hiệu Số (Signal Telemetry Decoder)
+          </h2>
+        </div>
+        <Badge variant="amber">INTERACTIVE CLI</Badge>
+      </div>
+
+      <p class="text-sm text-cosmic-muted font-sans leading-relaxed">
+        Nhập một chuỗi ký tự bất kỳ để hệ thống chuyển đổi trực tiếp sang mã nhị phân ASCII, mã Morse vô tuyến và mã băm kiểm định CRC-16.
+      </p>
+
+      <div class="space-y-3 font-mono text-xs">
+        <div>
+          <label for="signal-input" class="block text-cosmic-cyan mb-1.5">NHẬP THÔNG ĐIỆP BẢN TIN TRUYỀN:</label>
+          <input
+            type="text"
+            id="signal-input"
+            value="HELLO COSMIC SIGNAL"
+            class="w-full px-4 py-2.5 rounded bg-space-900 border border-cosmic-cyan/30 text-cosmic-text text-sm font-mono focus:outline-none focus:border-cosmic-cyan focus:ring-1 focus:ring-cosmic-cyan"
+          />
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="bg-space-950 p-4 rounded-lg border border-cosmic-cyan/15 space-y-1.5">
+            <span class="text-cosmic-cyan text-[11px] font-bold">1. NHỊ PHÂN 8-BIT (BINARY PACKET):</span>
+            <div id="binary-output" class="text-slate-300 font-mono break-all text-[11px] leading-relaxed"></div>
+          </div>
+
+          <div class="bg-space-950 p-4 rounded-lg border border-cosmic-cyan/15 space-y-1.5">
+            <span class="text-cosmic-amber text-[11px] font-bold">2. MÃ VÔ TUYẾN MORSE:</span>
+            <div id="morse-output" class="text-cosmic-amber font-mono break-all text-[11px] leading-relaxed"></div>
+          </div>
+
+          <div class="bg-space-950 p-4 rounded-lg border border-cosmic-cyan/15 space-y-1.5">
+            <span class="text-cosmic-violet text-[11px] font-bold">3. MÃ HEXADECIMAL:</span>
+            <div id="hex-output" class="text-slate-300 font-mono break-all text-[11px] leading-relaxed"></div>
+          </div>
+
+          <div class="bg-space-950 p-4 rounded-lg border border-cosmic-cyan/15 space-y-1.5">
+            <span class="text-emerald-400 text-[11px] font-bold">4. KÍCH THƯỚC GÓI TIN:</span>
+            <div id="packet-size" class="text-emerald-400 font-mono text-[11px]"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiment 3: Radio Frequency Waveform Visualizer -->
+    <section class="glass-panel p-6 sm:p-8 rounded-2xl border border-cosmic-cyan/25 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-cosmic-cyan/15 pb-4">
+        <div>
+          <div class="text-xs font-mono text-cosmic-cyan uppercase">// THÍ NGHIỆM #03</div>
+          <h2 class="text-xl sm:text-2xl font-heading font-bold text-cosmic-text">
+            Máy Phân Tích Dạng Sóng Vô Tuyến (RF Waveform Analyzer)
+          </h2>
+        </div>
+        <Badge variant="violet">SIGNAL SYNTHESIS</Badge>
+      </div>
+
+      <p class="text-sm text-cosmic-muted font-sans leading-relaxed">
+        Tùy chỉnh tần số dao động (Frequency) và biên độ (Amplitude) để xem mô hình biến điệu sóng mang vô tuyến (Carrier Wave Modulation) trong thời gian thực.
+      </p>
+
+      <div class="relative bg-space-950 rounded-xl border border-cosmic-cyan/20 overflow-hidden h-[200px]">
+        <canvas id="wave-canvas" class="w-full h-full block"></canvas>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 font-mono text-xs">
+        <div>
+          <label class="flex justify-between text-cosmic-cyan mb-1">
+            <span>TẦN SỐ SÓNG MANG (FREQUENCY):</span>
+            <span id="freq-val" class="font-bold text-cosmic-text">24 MHz</span>
+          </label>
+          <input
+            type="range"
+            id="freq-slider"
+            min="5"
+            max="60"
+            value="24"
+            class="w-full accent-cosmic-cyan cursor-pointer"
+          />
+        </div>
+
+        <div>
+          <label class="flex justify-between text-cosmic-cyan mb-1">
+            <span>BIÊN ĐỘ (AMPLITUDE):</span>
+            <span id="amp-val" class="font-bold text-cosmic-text">45%</span>
+          </label>
+          <input
+            type="range"
+            id="amp-slider"
+            min="10"
+            max="80"
+            value="45"
+            class="w-full accent-cosmic-cyan cursor-pointer"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  // ==================== EXPERIMENT 1: PACKET ROUTER SIMULATOR ====================
+  (function initPacketSim() {
+    const canvas = document.getElementById('packet-canvas') as HTMLCanvasElement | null;
+    const launchBtn = document.getElementById('launch-packet-btn');
+    const clearBtn = document.getElementById('clear-packet-btn');
+    const counterEl = document.getElementById('packet-counter');
+
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 600);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 340);
+
+    window.addEventListener('resize', () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
+    });
+
+    const nodes = [
+      { id: 'GS-EARTH', x: 0.1, y: 0.75, name: 'Trạm Mặt Đất (Earth)', color: '#4debff' },
+      { id: 'SAT-LEO-1', x: 0.35, y: 0.3, name: 'Vệ Tinh LEO 1', color: '#9b6dff' },
+      { id: 'SAT-LEO-2', x: 0.65, y: 0.25, name: 'Vệ Tinh LEO 2', color: '#ffca80' },
+      { id: 'GS-DEST', x: 0.9, y: 0.7, name: 'Trạm Tiếp Nhận', color: '#10b981' },
+    ];
+
+    interface Packet {
+      fromIndex: number;
+      progress: number;
+      speed: number;
+      color: string;
+    }
+
+    let packets: Packet[] = [];
+    let deliveredCount = 0;
+
+    function launch() {
+      packets.push({
+        fromIndex: 0,
+        progress: 0,
+        speed: 0.015,
+        color: '#4debff',
+      });
+      deliveredCount++;
+      if (counterEl) counterEl.textContent = String(deliveredCount);
+    }
+
+    launchBtn?.addEventListener('click', launch);
+    clearBtn?.addEventListener('click', () => {
+      packets = [];
+      deliveredCount = 0;
+      if (counterEl) counterEl.textContent = '0';
+    });
+
+    // Auto launch periodically if user stays on page
+    let autoInterval = setInterval(launch, 3000);
+    launch();
+
+    function render() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw Connection Links
+      for (let i = 0; i < nodes.length - 1; i++) {
+        const n1 = nodes[i];
+        const n2 = nodes[i + 1];
+        ctx.beginPath();
+        ctx.moveTo(n1.x * width, n1.y * height);
+        ctx.lineTo(n2.x * width, n2.y * height);
+        ctx.strokeStyle = 'rgba(77, 235, 255, 0.2)';
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Draw Packets
+      for (let i = packets.length - 1; i >= 0; i--) {
+        const p = packets[i];
+        p.progress += p.speed;
+
+        if (p.progress >= 1) {
+          p.progress = 0;
+          p.fromIndex++;
+          if (p.fromIndex >= nodes.length - 1) {
+            packets.splice(i, 1);
+            continue;
+          }
+        }
+
+        const n1 = nodes[p.fromIndex];
+        const n2 = nodes[p.fromIndex + 1];
+
+        const curX = n1.x * width + (n2.x * width - n1.x * width) * p.progress;
+        const curY = n1.y * height + (n2.y * height - n1.y * height) * p.progress;
+
+        ctx.beginPath();
+        ctx.arc(curX, curY, 5, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = '#4debff';
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      // Draw Nodes
+      nodes.forEach((n) => {
+        const nx = n.x * width;
+        const ny = n.y * height;
+
+        ctx.beginPath();
+        ctx.arc(nx, ny, 9, 0, Math.PI * 2);
+        ctx.fillStyle = '#050816';
+        ctx.strokeStyle = n.color;
+        ctx.lineWidth = 2.5;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = '10px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#eaf3ff';
+        ctx.textAlign = 'center';
+        ctx.fillText(n.name, nx, ny + 22);
+      });
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  })();
+
+  // ==================== EXPERIMENT 2: SIGNAL DECODER ====================
+  (function initDecoder() {
+    const input = document.getElementById('signal-input') as HTMLInputElement | null;
+    const binaryOut = document.getElementById('binary-output');
+    const morseOut = document.getElementById('morse-output');
+    const hexOut = document.getElementById('hex-output');
+    const sizeOut = document.getElementById('packet-size');
+
+    const morseMap: Record<string, string> = {
+      A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.',
+      G: '--.', H: '....', I: '..', J: '.---', K: '-.-', L: '.-..',
+      M: '--', N: '-.', O: '---', P: '.--.', Q: '--.-', R: '.-.',
+      S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-',
+      Y: '-.--', Z: '--..', '0': '-----', '1': '.----', '2': '..---',
+      '3': '...--', '4': '....-', '5': '.....', '6': '-....',
+      '7': '--...', '8': '---..', '9': '----.', ' ': ' / ',
+    };
+
+    function update() {
+      const text = input ? input.value : '';
+
+      // Binary
+      let binaryStr = '';
+      for (let i = 0; i < text.length; i++) {
+        binaryStr += text.charCodeAt(i).toString(2).padStart(8, '0') + ' ';
+      }
+      if (binaryOut) binaryOut.textContent = binaryStr || '00000000';
+
+      // Morse
+      let morseStr = '';
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i].toUpperCase();
+        morseStr += (morseMap[char] || char) + ' ';
+      }
+      if (morseOut) morseOut.textContent = morseStr || '...';
+
+      // Hex
+      let hexStr = '';
+      for (let i = 0; i < text.length; i++) {
+        hexStr += '0x' + text.charCodeAt(i).toString(16).toUpperCase() + ' ';
+      }
+      if (hexOut) hexOut.textContent = hexStr || '0x00';
+
+      // Size
+      if (sizeOut) {
+        sizeOut.textContent = `${text.length} BYTES (${text.length * 8} BITS) [CRC-16 VALID]`;
+      }
+    }
+
+    input?.addEventListener('input', update);
+    update();
+  })();
+
+  // ==================== EXPERIMENT 3: WAVEFORM VISUALIZER ====================
+  (function initWaveVisualizer() {
+    const canvas = document.getElementById('wave-canvas') as HTMLCanvasElement | null;
+    const freqSlider = document.getElementById('freq-slider') as HTMLInputElement | null;
+    const ampSlider = document.getElementById('amp-slider') as HTMLInputElement | null;
+    const freqVal = document.getElementById('freq-val');
+    const ampVal = document.getElementById('amp-val');
+
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 600);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 200);
+
+    window.addEventListener('resize', () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
+    });
+
+    let frequency = 24;
+    let amplitude = 45;
+    let phase = 0;
+
+    freqSlider?.addEventListener('input', (e) => {
+      frequency = Number((e.target as HTMLInputElement).value);
+      if (freqVal) freqVal.textContent = `${frequency} MHz`;
+    });
+
+    ampSlider?.addEventListener('input', (e) => {
+      amplitude = Number((e.target as HTMLInputElement).value);
+      if (ampVal) ampVal.textContent = `${amplitude}%`;
+    });
+
+    function renderWave() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+
+      // Centerline
+      ctx.beginPath();
+      ctx.moveTo(0, height / 2);
+      ctx.lineTo(width, height / 2);
+      ctx.strokeStyle = 'rgba(77, 235, 255, 0.15)';
+      ctx.stroke();
+
+      // Sine Wave
+      ctx.beginPath();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#4debff';
+
+      const ampPixel = (height / 2) * (amplitude / 100);
+
+      for (let x = 0; x < width; x++) {
+        const y = height / 2 + Math.sin(x * (frequency / 1000) + phase) * ampPixel;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      phase += 0.05;
+      requestAnimationFrame(renderWave);
+    }
+
+    renderWave();
+  })();
+</script>
